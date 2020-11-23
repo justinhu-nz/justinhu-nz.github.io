@@ -1,4 +1,4 @@
-/* Generated on: Sat Nov 21 2020 11:45:55 GMT+0000 (Coordinated Universal Time) */
+/* Generated on: Mon Nov 23 2020 05:29:14 GMT+0000 (Coordinated Universal Time) */
 /* ==========================================================================
    normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css 
    ========================================================================== */
@@ -489,8 +489,8 @@ figcaption {
 }
 
 .footer {
-  padding-top: 37px;
-  padding-bottom: 37px;
+  padding-top: 0px;
+  padding-bottom: 0px;
   background-color: #333;
 }
 
@@ -611,7 +611,7 @@ figcaption {
   margin-top: auto;
   margin-bottom: auto;
   padding-top: 19px;
-  padding-bottom: 16px;
+  padding-bottom: 19px;
   font-family: Helvetica, sans-serif;
   color: #fff;
   font-size: 23px;
@@ -630,9 +630,15 @@ figcaption {
 
 .heading-2 {
   font-family: 'PT Serif', serif;
-  font-size: 38px;
+  color: #000;
+  font-size: 39px;
   line-height: 49px;
   letter-spacing: -1px;
+  text-decoration: none;
+}
+
+.heading-2.nounderline {
+  text-decoration: none;
 }
 
 .container-2 {
@@ -643,6 +649,18 @@ figcaption {
 
 .section-2 {
   background-color: #000;
+}
+
+.link-block {
+  text-decoration: none;
+}
+
+.text-block {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-family: Helvetica, sans-serif;
+  color: #fff;
+  font-size: 16px;
 }
 
 @media screen and (max-width: 991px) {
@@ -814,6 +832,14 @@ figcaption {
     margin-bottom: 4px;
   }
 
+  .post-summary {
+    font-size: 15px;
+  }
+
+  .post-info {
+    font-size: 11px;
+  }
+
   .social-link-group {
     margin-top: 0px;
   }
@@ -836,6 +862,10 @@ figcaption {
     text-align: center;
   }
 
+  .post-info-wrapper {
+    font-size: 10px;
+  }
+
   .nav-link {
     font-size: 16px;
   }
@@ -845,6 +875,21 @@ figcaption {
     margin-right: 0px;
     margin-bottom: 11px;
     margin-left: 0px;
+  }
+
+  .heading {
+    text-align: left;
+    text-indent: 9px;
+  }
+
+  .heading-2 {
+    font-size: 30px;
+    line-height: 39px;
+  }
+
+  .container-2 {
+    padding-right: 0px;
+    padding-left: 0px;
   }
 }
 @font-face {
