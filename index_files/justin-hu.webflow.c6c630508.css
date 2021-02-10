@@ -1,4 +1,4 @@
-/* Generated on: Wed Feb 10 2021 02:12:49 GMT+0000 (Coordinated Universal Time) */
+/* Generated on: Wed Feb 10 2021 13:20:54 GMT+0000 (Coordinated Universal Time) */
 /* ==========================================================================
    normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css 
    ========================================================================== */
@@ -495,7 +495,7 @@ figcaption {
 }
 
 .button-round {
-  padding: 5px 12px;
+  padding: 1px 12px 3px;
   border: 1px solid #d3d3d3;
   border-radius: 20px;
   background-color: #fff;
@@ -642,7 +642,7 @@ figcaption {
 }
 
 .container-2 {
-  margin-top: -9px;
+  margin-top: -15px;
   margin-bottom: 10px;
   padding: 0px 60px 20px;
   border-bottom: 0.1px none #404047;
@@ -718,7 +718,9 @@ figcaption {
 }
 
 .column-2 {
+  margin-top: -2px;
   padding-top: 10px;
+  padding-left: 5px;
 }
 
 @media screen and (max-width: 991px) {
