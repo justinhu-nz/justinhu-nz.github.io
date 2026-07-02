@@ -16,7 +16,7 @@ LIMIT = 5
 
 # Markers that bound the article list inside the JSON-encoded template string
 ARTICLE_LIST_START = '>Latest stories<\\u002Fp>\\n\\n<div style=\\"display: flex; flex-direction: column; font-size: 17px\\">\\n'
-ARTICLE_LIST_END   = '\\n<\\u002Fdiv>\\n<p style=\\"font-size: 14px; margin: 16px 0 0\\">'
+ARTICLE_LIST_END   = '\\n<\\u002Fdiv>\\n<\\u002Fdiv>\\n<\\u002Fdiv>\\n\\n<\\u002Fbody><\\u002Fhtml>'
 
 
 def fetch_rss(url: str) -> bytes:
