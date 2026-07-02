@@ -15,8 +15,8 @@ INDEX_PATH = "index.html"
 LIMIT = 5
 
 # Markers that bound the article list inside the JSON-encoded template string
-ARTICLE_LIST_START = '>Recent reporting<\\u002Fp>\\n\\n<div style=\\"display: flex; flex-direction: column; font-size: 17px\\">\\n'
-ARTICLE_LIST_END   = '\\n<\\u002Fdiv>\\n<\\u002Fdiv>\\n<\\u002Fdiv>\\n\\n<\\u002Fbody><\\u002Fhtml>'
+ARTICLE_LIST_START = '>Latest stories<\\u002Fp>\\n\\n<div style=\\"display: flex; flex-direction: column; font-size: 17px\\">\\n'
+ARTICLE_LIST_END   = '\\n<\\u002Fdiv>\\n<p style=\\"font-size: 14px; margin: 16px 0 0\\">'
 
 
 def fetch_rss(url: str) -> bytes:
@@ -69,7 +69,7 @@ def build_article_html(articles: list[dict]) -> str:
         rows.append(
             f'<a href=\\"{link}\\" class=\\"article\\" style=\\"{style}\\">'
             f'\\n<span style=\\"line-height: 1.45\\">{title}<\\u002Fspan>'
-            f'\\n<span style=\\"font-size: 14px; color: #bbb; white-space: nowrap; flex-shrink: 0\\">{date}<\\u002Fspan>'
+            f'\\n<span style=\\"font-size: 14px; color: #888; white-space: nowrap; flex-shrink: 0\\">{date}<\\u002Fspan>'
             f'\\n<\\u002Fa>'
         )
     return "\\n".join(rows)
