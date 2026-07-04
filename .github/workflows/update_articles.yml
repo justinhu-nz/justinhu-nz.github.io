@@ -2,7 +2,7 @@ name: Update articles
 
 on:
   schedule:
-    - cron: "0 */6 * * *"   # every 6 hours
+    - cron: "23 */6 * * *"   # every 6 hours, offset to :23 to avoid Pages deploy contention
   workflow_dispatch:          # manual trigger from GitHub UI
 
 permissions:
