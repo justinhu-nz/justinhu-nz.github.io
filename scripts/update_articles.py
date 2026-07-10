@@ -6,17 +6,17 @@ Run from the repo root: python3 scripts/update_articles.py
 
 import urllib.request
 import xml.etree.ElementTree as ET
-from datetime import datetime, timezone
-import re
+from datetime import datetime
+from html import escape
 import sys
 
 RSS_URL = "https://authory.com/justinhu/rss"
 INDEX_PATH = "index.html"
 LIMIT = 5
 
-# Markers that bound the article list inside the JSON-encoded template string
-ARTICLE_LIST_START = '>Latest stories<\\u002Fp>\\n\\n<div style=\\"display: flex; flex-direction: column; font-size: 17px\\">\\n'
-ARTICLE_LIST_END   = '\\n<\\u002Fa>\\n<\\u002Fdiv>\\n<\\u002Fdiv>\\n<\\u002Fdiv>\\n\\n<\\u002Fbody><\\u002Fhtml>'
+# Markers that bound the article list inside the static homepage.
+ARTICLE_LIST_START = '<p style="font-size: 14px; color: var(--label); letter-spacing: 0.04em; text-transform: uppercase; margin: 0 0 19px">Latest stories</p>\n\n<div style="display: flex; flex-direction: column; font-size: 17px">\n'
+ARTICLE_LIST_END   = '\n</div>\n</div>\n</div>\n\n</body></html>'
 
 
 def fetch_rss(url: str) -> bytes:
@@ -43,11 +43,6 @@ def parse_articles(xml_bytes: bytes, limit: int) -> list[dict]:
     return articles
 
 
-def encode(s: str) -> str:
-    """Escape a string for insertion into the JSON-encoded template."""
-    return s.replace("\\", "\\\\").replace('"', '\\"')
-
-
 def build_article_html(articles: list[dict]) -> str:
     REGULAR_STYLE = (
         'display: flex; justify-content: space-between; align-items: baseline; '
@@ -63,16 +58,16 @@ def build_article_html(articles: list[dict]) -> str:
     rows = []
     for i, a in enumerate(articles):
         style = LAST_STYLE if i == len(articles) - 1 else REGULAR_STYLE
-        title = encode(a["title"])
-        link  = encode(a["link"])
-        date  = encode(a["date"])
+        title = escape(a["title"])
+        link  = escape(a["link"], quote=True)
+        date  = escape(a["date"])
         rows.append(
-            f'<a href=\\"{link}\\" class=\\"article\\" style=\\"{style}\\">'
-            f'\\n<span style=\\"line-height: 1.45\\">{title}<\\u002Fspan>'
-            f'\\n<span style=\\"font-size: 14px; color: var(--subtle); white-space: nowrap; flex-shrink: 0\\">{date}<\\u002Fspan>'
-            f'\\n<\\u002Fa>'
+            f'<a href="{link}" class="article" style="{style}">'
+            f'\n<span style="line-height: 1.45">{title}</span>'
+            f'\n<span style="font-size: 14px; color: var(--subtle); white-space: nowrap; flex-shrink: 0">{date}</span>'
+            f'\n</a>'
         )
-    return "\\n".join(rows)
+    return "\n".join(rows)
 
 
 def patch_index(articles: list[dict]) -> bool:
