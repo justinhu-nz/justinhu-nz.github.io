@@ -35,7 +35,7 @@ def parse_articles(xml_bytes: bytes, limit: int) -> list[dict]:
         pub   = item.findtext("pubDate", "").strip()
         try:
             dt    = datetime.strptime(pub.replace(" GMT", " +0000"), "%a, %d %b %Y %H:%M:%S %z")
-            label = f"{dt.day} {dt.strftime('%b')}"
+            label = f"{dt.strftime('%b')} {dt.day}"
         except ValueError:
             label = ""
         if title and link:
