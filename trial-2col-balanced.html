@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en-NZ"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Justin Hu — Balanced layout trial</title>
+<meta name="robots" content="noindex">
+<style>
+@font-face {
+  font-family: 'Source Sans 3';
+  font-style: normal;
+  font-weight: 300 500;
+  font-display: swap;
+  src: url("fonts/eb3d325c-e058-41f9-a5ef-965d2da668bb.woff2") format('woff2');
+}
+</style>
+<style>
+:root {
+  --bg: #faf9f7;
+  --ink: #333;
+  --body: #444;
+  --muted: #999;
+  --subtle: #888;
+  --label: #aaa;
+  --rule: rgba(0,0,0,.06);
+  --link-deco: rgba(0,0,0,.15);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1c1a17;
+    --ink: #ddd8d0;
+    --body: #bbb5ac;
+    --muted: #6e6e6e;
+    --subtle: #606060;
+    --label: #505050;
+    --rule: rgba(255,255,255,.09);
+    --link-deco: rgba(255,255,255,.12);
+  }
+}
+body { margin: 0; background: var(--bg); font-family: 'Source Sans 3', sans-serif; }
+a { transition: color 0.15s; }
+.email:hover { color: var(--ink); }
+.social:hover { color: var(--ink); }
+.article:hover { color: var(--ink); }
+
+/* Mobile-first: single stacked column. Latest stories keeps its normal
+   top margin and simply follows the rest of the content. */
+.wrap { padding: 60px 48px; max-width: 600px; }
+.col-stories { margin: 58px 0 0; }
+
+/* Desktop: two columns, Latest stories moves to the right. */
+@media (min-width: 960px) {
+  .wrap {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: minmax(0, 520px) minmax(320px, 400px);
+    column-gap: 80px;
+    max-width: 1120px;
+    padding: 72px 62px;
+  }
+  .col-stories { grid-column: 2; grid-row: 1; margin: 0; }
+}
+</style>
+</head>
+<body>
+<div style="min-height: 100vh; display: flex; align-items: flex-start; padding: 0">
+<div class="wrap">
+<div class="col-main">
+<p style="font-size: 20px; line-height: 1.75; color: var(--ink); margin: 0 0 7px; font-weight: 400; max-width: 550px">Justin Hu is a digital politics reporter at TVNZ, covering public policy, local government and transport, based in Auckland.</p>
+
+<p style="font-size: 14px; color: var(--label); letter-spacing: 0.04em; text-transform: uppercase; margin: 24px 0 7px">Want to yarn? Got a tip?</p>
+<p style="font-size: 17px; line-height: 1.7; color: var(--muted); margin: 0"><a href="mailto:justin.hu@tvnz.co.nz" class="email" style="color: var(--muted); text-decoration: none">justin.hu@tvnz.co.nz</a></p>
+
+<div style="display: flex; gap: 19px; margin: 29px 0 0; font-size: 16px">
+<a href="https://www.1news.co.nz/reporter/justin-hu/" class="social" style="color: var(--subtle); text-decoration: none">1news</a>
+<a href="https://authory.com/JustinHu" class="social" style="color: var(--subtle); text-decoration: none">authory</a>
+<a href="https://github.com/justinhu-nz/" class="social" rel="nofollow" style="color: var(--subtle); text-decoration: none">github</a>
+</div>
+
+<div style="margin: 58px 0 0">
+<p style="font-size: 14px; color: var(--label); letter-spacing: 0.04em; text-transform: uppercase; margin: 0 0 19px">Web app projects</p>
+
+<div style="display: flex; flex-wrap: wrap; gap: 12px 24px; font-size: 16px">
+<a href="https://justinhu-nz.github.io/selectcommittee-transcripts/" rel="nofollow" style="color: var(--subtle); text-decoration: none; white-space: nowrap">Select Committee Transcripts</a>
+<a href="https://justinhu-nz.github.io/nz-newsstand/" rel="nofollow" style="color: var(--subtle); text-decoration: none; white-space: nowrap">The Newsstand</a>
+<a href="https://justinhu-nz.github.io/rnz-bulletins-archive/" rel="nofollow" style="color: var(--subtle); text-decoration: none; white-space: nowrap">Radio Bulletins Archive</a>
+<a href="https://justinhu-nz.github.io/RadioLive/" rel="nofollow" style="color: var(--subtle); text-decoration: none; white-space: nowrap">RadioLive</a>
+<a href="https://bsky.app/profile/95nowplaying.bsky.social" rel="nofollow" style="color: var(--subtle); text-decoration: none; white-space: nowrap">95bFM Now Playing</a>
+<a href="https://justinhu-nz.github.io/GTFSTransitVisualiser/" rel="nofollow" style="color: var(--subtle); text-decoration: none; white-space: nowrap">GTFS Transit Data Visualiser</a>
+<a href="https://justinhu-nz.github.io/GTFS-frequencyMapper/" rel="nofollow" style="color: var(--subtle); text-decoration: none; white-space: nowrap">GTFS Transit Frequency Mapper</a>
+</div>
+</div>
+</div>
+
+<div class="col-stories">
+<p style="font-size: 14px; color: var(--label); letter-spacing: 0.04em; text-transform: uppercase; margin: 0 0 19px">Latest stories</p>
+
+<div style="display: flex; flex-direction: column; font-size: 17px">
+<a href="https://www.1news.co.nz/2026/07/09/two-key-city-rail-link-commitments-confirmed-ahead-of-opening/" class="article" style="display: flex; justify-content: space-between; align-items: baseline; gap: 19px; padding: 12px 0; border-top: 1px solid var(--rule); color: var(--body); text-decoration: none">
+<span style="line-height: 1.45">Two key City Rail Link commitments confirmed ahead of opening</span>
+<span style="font-size: 14px; color: var(--subtle); white-space: nowrap; flex-shrink: 0">9 Jul</span>
+</a>
+<a href="https://www.1news.co.nz/2026/07/09/report-makes-37bn-case-for-kiwi-indians-impact-ahead-of-modi-visit/" class="article" style="display: flex; justify-content: space-between; align-items: baseline; gap: 19px; padding: 12px 0; border-top: 1px solid var(--rule); color: var(--body); text-decoration: none">
+<span style="line-height: 1.45">Report makes $37bn case for Kiwi Indians&#x27; impact ahead of Modi visit</span>
+<span style="font-size: 14px; color: var(--subtle); white-space: nowrap; flex-shrink: 0">9 Jul</span>
+</a>
+<a href="https://www.1news.co.nz/2026/07/09/three-major-banks-lift-floating-rates-as-ocr-hike-flows-through/" class="article" style="display: flex; justify-content: space-between; align-items: baseline; gap: 19px; padding: 12px 0; border-top: 1px solid var(--rule); color: var(--body); text-decoration: none">
+<span style="line-height: 1.45">Three major banks lift floating rates as OCR hike flows through</span>
+<span style="font-size: 14px; color: var(--subtle); white-space: nowrap; flex-shrink: 0">9 Jul</span>
+</a>
+<a href="https://www.1news.co.nz/2026/07/09/former-controversial-national-mp-to-stand-for-nz-first/" class="article" style="display: flex; justify-content: space-between; align-items: baseline; gap: 19px; padding: 12px 0; border-top: 1px solid var(--rule); color: var(--body); text-decoration: none">
+<span style="line-height: 1.45">Controversial former National MP to stand for NZ First</span>
+<span style="font-size: 14px; color: var(--subtle); white-space: nowrap; flex-shrink: 0">9 Jul</span>
+</a>
+<a href="https://www.1news.co.nz/2026/07/09/nz-to-explore-joining-fiji-australia-defence-alliance-pm/" class="article" style="display: flex; justify-content: space-between; align-items: baseline; gap: 19px; padding: 12px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--body); text-decoration: none">
+<span style="line-height: 1.45">NZ to &#x27;explore joining&#x27; Fiji-Australia defence alliance – PM</span>
+<span style="font-size: 14px; color: var(--subtle); white-space: nowrap; flex-shrink: 0">9 Jul</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+
+</body></html>

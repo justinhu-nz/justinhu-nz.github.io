@@ -16,7 +16,7 @@ LIMIT = 5
 
 # Markers that bound the article list inside the static homepage.
 ARTICLE_LIST_START = '<p style="font-size: 14px; color: var(--label); letter-spacing: 0.04em; text-transform: uppercase; margin: 0 0 19px">Latest stories</p>\n\n<div style="display: flex; flex-direction: column; font-size: 17px">\n'
-ARTICLE_LIST_END   = '\n</div>\n</div>\n</div>\n\n</body></html>'
+ARTICLE_LIST_END   = '\n</div>\n</div>\n\n<div style="margin: 58px 0 0">\n<p style="font-size: 14px; color: var(--label); letter-spacing: 0.04em; text-transform: uppercase; margin: 0 0 19px">Web app projects</p>'
 
 
 def fetch_rss(url: str) -> bytes:

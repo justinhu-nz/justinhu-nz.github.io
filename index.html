@@ -88,8 +88,49 @@ a { transition: color 0.15s; }
   ]
 }
 </script>
+
+<style>
+/* These rules activate only when one of the standalone layout trials targets
+   its matching hidden marker. The normal homepage remains unchanged. */
+.layout-trial-target { display: none; }
+
+@media (min-width: 960px) {
+  body:has(#latest-stories-tight:target) > div > div {
+    box-sizing: border-box; display: grid !important;
+    grid-template-columns: minmax(0, 520px) minmax(340px, 480px);
+    column-gap: 40px; width: 100%; max-width: 1124px !important;
+    padding: 56px 42px !important;
+  }
+}
+@media (min-width: 1024px) {
+  body:has(#latest-stories-balanced:target) > div > div {
+    box-sizing: border-box; display: grid !important;
+    grid-template-columns: minmax(0, 550px) minmax(360px, 520px);
+    column-gap: 72px; width: 100%; max-width: 1266px !important;
+    padding: 72px 62px !important;
+  }
+}
+@media (min-width: 1120px) {
+  body:has(#latest-stories-airy:target) > div > div {
+    box-sizing: border-box; display: grid !important;
+    grid-template-columns: minmax(0, 550px) minmax(380px, 540px);
+    column-gap: 112px; width: 100%; max-width: 1362px !important;
+    padding: 88px 80px !important;
+  }
+}
+
+@media (min-width: 960px) {
+  body:has(.layout-trial-target:target) > div > div > * { grid-column: 1; }
+  body:has(.layout-trial-target:target) > div > div > div:last-child {
+    grid-column: 2; grid-row: 1 / -1; margin-top: 0 !important;
+  }
+}
+</style>
 </head>
 <body>
+<span id="latest-stories-tight" class="layout-trial-target" aria-hidden="true"></span>
+<span id="latest-stories-balanced" class="layout-trial-target" aria-hidden="true"></span>
+<span id="latest-stories-airy" class="layout-trial-target" aria-hidden="true"></span>
 <div style="min-height: 100vh; display: flex; align-items: flex-start; padding: 0">
 <div style="padding: 72px 62px; max-width: 600px">
 <p style="font-size: 20px; line-height: 1.75; color: var(--ink); margin: 0 0 7px; font-weight: 400; max-width: 550px">Justin Hu is a digital politics reporter at TVNZ, covering public policy, local government and transport, based in Auckland.</p>
@@ -101,20 +142,6 @@ a { transition: color 0.15s; }
 <a href="https://www.1news.co.nz/reporter/justin-hu/" class="social" style="color: var(--subtle); text-decoration: none">1news</a>
 <a href="https://authory.com/JustinHu" class="social" style="color: var(--subtle); text-decoration: none">authory</a>
 <a href="https://github.com/justinhu-nz/" class="social" rel="nofollow" style="color: var(--subtle); text-decoration: none">github</a>
-</div>
-
-<div style="margin: 58px 0 0">
-<p style="font-size: 14px; color: var(--label); letter-spacing: 0.04em; text-transform: uppercase; margin: 0 0 19px">Web app projects</p>
-
-<div style="display: flex; flex-wrap: wrap; gap: 12px 24px; font-size: 16px">
-<a href="https://justinhu-nz.github.io/selectcommittee-transcripts/" rel="nofollow" style="color: var(--subtle); text-decoration: none; white-space: nowrap">Select Committee Transcripts</a>
-<a href="https://justinhu-nz.github.io/nz-newsstand/" rel="nofollow" style="color: var(--subtle); text-decoration: none; white-space: nowrap">The Newsstand</a>
-<a href="https://justinhu-nz.github.io/rnz-bulletins-archive/" rel="nofollow" style="color: var(--subtle); text-decoration: none; white-space: nowrap">Radio Bulletins Archive</a>
-<a href="https://justinhu-nz.github.io/RadioLive/" rel="nofollow" style="color: var(--subtle); text-decoration: none; white-space: nowrap">RadioLive</a>
-<a href="https://bsky.app/profile/95nowplaying.bsky.social" rel="nofollow" style="color: var(--subtle); text-decoration: none; white-space: nowrap">95bFM Now Playing</a>
-<a href="https://justinhu-nz.github.io/GTFSTransitVisualiser/" rel="nofollow" style="color: var(--subtle); text-decoration: none; white-space: nowrap">GTFS Transit Data Visualiser</a>
-<a href="https://justinhu-nz.github.io/GTFS-frequencyMapper/" rel="nofollow" style="color: var(--subtle); text-decoration: none; white-space: nowrap">GTFS Transit Frequency Mapper</a>
-</div>
 </div>
 
 <div style="margin: 58px 0 0">
@@ -141,6 +168,20 @@ a { transition: color 0.15s; }
 <span style="line-height: 1.45">Official City Rail Link opening date: all you need to know</span>
 <span style="font-size: 14px; color: var(--subtle); white-space: nowrap; flex-shrink: 0">5 Aug</span>
 </a>
+</div>
+</div>
+
+<div style="margin: 58px 0 0">
+<p style="font-size: 14px; color: var(--label); letter-spacing: 0.04em; text-transform: uppercase; margin: 0 0 19px">Web app projects</p>
+
+<div style="display: flex; flex-wrap: wrap; gap: 12px 24px; font-size: 16px">
+<a href="https://justinhu-nz.github.io/selectcommittee-transcripts/" rel="nofollow" style="color: var(--subtle); text-decoration: none; white-space: nowrap">Select Committee Transcripts</a>
+<a href="https://justinhu-nz.github.io/nz-newsstand/" rel="nofollow" style="color: var(--subtle); text-decoration: none; white-space: nowrap">The Newsstand</a>
+<a href="https://justinhu-nz.github.io/rnz-bulletins-archive/" rel="nofollow" style="color: var(--subtle); text-decoration: none; white-space: nowrap">Radio Bulletins Archive</a>
+<a href="https://justinhu-nz.github.io/RadioLive/" rel="nofollow" style="color: var(--subtle); text-decoration: none; white-space: nowrap">RadioLive</a>
+<a href="https://bsky.app/profile/95nowplaying.bsky.social" rel="nofollow" style="color: var(--subtle); text-decoration: none; white-space: nowrap">95bFM Now Playing</a>
+<a href="https://justinhu-nz.github.io/GTFSTransitVisualiser/" rel="nofollow" style="color: var(--subtle); text-decoration: none; white-space: nowrap">GTFS Transit Data Visualiser</a>
+<a href="https://justinhu-nz.github.io/GTFS-frequencyMapper/" rel="nofollow" style="color: var(--subtle); text-decoration: none; white-space: nowrap">GTFS Transit Frequency Mapper</a>
 </div>
 </div>
 </div>
