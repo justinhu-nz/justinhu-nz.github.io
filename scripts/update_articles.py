@@ -36,10 +36,12 @@ def parse_articles(xml_bytes: bytes, limit: int) -> list[dict]:
         try:
             dt    = datetime.strptime(pub.replace(" GMT", " +0000"), "%a, %d %b %Y %H:%M:%S %z")
             label = f"{dt.strftime('%b')} {dt.day}"
+            iso   = dt.strftime("%Y-%m-%d")
         except ValueError:
             label = ""
+            iso   = ""
         if title and link:
-            articles.append({"title": title, "link": link, "date": label})
+            articles.append({"title": title, "link": link, "date": label, "iso": iso})
     return articles
 
 
@@ -61,10 +63,11 @@ def build_article_html(articles: list[dict]) -> str:
         title = escape(a["title"])
         link  = escape(a["link"], quote=True)
         date  = escape(a["date"])
+        iso   = escape(a["iso"], quote=True)
         rows.append(
             f'<a href="{link}" class="article" style="{style}">'
             f'\n<span style="line-height: 1.45">{title}</span>'
-            f'\n<span style="font-size: 14px; color: var(--subtle); white-space: nowrap; flex-shrink: 0">{date}</span>'
+            f'\n<span style="font-size: 14px; color: var(--subtle); white-space: nowrap; flex-shrink: 0" data-iso="{iso}">{date}</span>'
             f'\n</a>'
         )
     return "\n".join(rows)
