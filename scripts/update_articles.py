@@ -12,7 +12,7 @@ import sys
 
 RSS_URL = "https://authory.com/justinhu/rss"
 INDEX_PATH = "index.html"
-LIMIT = 5
+LIMIT = 4
 
 # Markers that bound the article list inside the static homepage.
 ARTICLE_LIST_START = '<p style="font-size: 14px; color: var(--label); letter-spacing: 0.04em; text-transform: uppercase; margin: 0 0 19px">Latest stories</p>\n\n<div style="display: flex; flex-direction: column; font-size: 17px">\n'

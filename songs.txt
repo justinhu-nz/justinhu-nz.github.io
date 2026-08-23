@@ -1,0 +1,70 @@
+# Now playing — one song per line, as "Song — Artist"
+# Lines starting with # are ignored, so leave yourself notes here.
+# Blank lines are fine too. Add your songs below:
+
+Phoebe Bridgers - Motion Sickness
+Mitski - Nobody
+Aphex Twin - Alberto Balsalm
+Aphex Twin - #3
+Sibylle Baier - Tonight
+Sibylle Baier - Forget About
+Sibylle Baier - Softly
+Paramore - Still into You
+Chelsea Jade - High Beam
+Tiny Ruins - Kore Waits in the Underworld
+Tiny Ruins - Priest with Balloons
+Merival - A Better Deal
+Lawrence Arabia - Everybody Wants Something
+Aphex Twin - QKThr
+BENEE - Find an Island
+Kate Bush - Running Up That Hill (A Deal With God)
+TORRES - New Skin
+The Staves - Steady
+Alicia Keys - No One
+Haley Blais - Small Foreign Faction
+Mitski - Last Words of a Shooting Star
+Tiny Ruins - Holograms
+Lorde - Perfect Places
+Foley - Rendezvous
+ANIMA! - Ear to Ear
+Sarah McLachlan - Building a Mystery
+BEA1991 - I Am A Joker!
+Daughter - Medicine
+mxmtoon - quiet motions
+RIIKI REID - High Heights
+Sufjan Stevens - Mystery of Love
+Paige - So Far
+The Beths - Future Me Hates Me
+The Beths - Metal
+Barrie - Geology
+Mitski - My Love Mine All Mine
+Bic Runga - Sway
+The Beths - Expert In A Dying Field
+Chelsea Jade - Laugh It Off
+Foley - Midnight
+Byllie-jean - Running Amuck
+Paige - Waves
+Fenne Lily - More Than You Know
+Purple Pilgrims - Sensing Me
+Sibylle Baier - I Lost Something in the Hills
+Gracie Abrams - 21
+MARINA - Are You Satisfied?
+Clea - Grey Area
+Fenne Lily - Top to Toe
+Georgia Lines - No One Knows
+Daughter - Fossa
+Foley - Rendezvous
+Yumi Zouma - Where The Light Used to Lay
+Mitski - The Only Heartbreaker
+Paramore - Hard Times
+Kate Bush - Cloudbusting
+Byllie-jean - E moko
+Lola Young - Conceited
+Sidney Gish - Presumably Dead Arm (617 Sessions)
+Yumi Zouma - In Camera
+Yumi Zouma - Keep It Close To Me
+Billie Marten - La Lune
+The Beths - Til My Heart Stops
+Kate Bush - Army Dreamers 
+The Mutton Birds - Dominion Road
+

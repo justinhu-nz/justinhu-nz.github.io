@@ -77,6 +77,15 @@ a { transition: color 0.15s; }
 .date-rel { display: none; }
 .article:hover .date-abs { display: none; }
 .article:hover .date-rel { display: inline; }
+
+/* Short-laptop fit — tightens vertical rhythm ONLY on small, short screens
+   (e.g. 1366x768). Both conditions must hold: the max-width:1600px guard means
+   a 1920-wide desktop can never match, no matter how much browser chrome
+   shortens its window; max-height:820px keeps 1080-tall screens out too. */
+@media (max-width: 1600px) and (max-height: 820px) {
+  [style*="72px 62px"] { padding-top: 44px !important; padding-bottom: 44px !important; }
+  [style*="58px 0 0"] { margin-top: 34px !important; }
+}
 </style>
 
 <script type="application/ld+json">
@@ -185,13 +194,9 @@ a { transition: color 0.15s; }
 <span style="line-height: 1.45">Labour promises a surplus but says it won&#x27;t cut to get there</span>
 <span style="font-size: 14px; color: var(--subtle); white-space: nowrap; flex-shrink: 0" data-iso="2026-08-22">Aug 22</span>
 </a>
-<a href="https://www.1news.co.nz/2026/08/18/guidelines-to-let-gps-diagnose-endometriosis-more-easily/" class="article" style="display: flex; justify-content: space-between; align-items: baseline; gap: 19px; padding: 12px 0; border-top: 1px solid var(--rule); color: var(--body); text-decoration: none">
+<a href="https://www.1news.co.nz/2026/08/18/guidelines-to-let-gps-diagnose-endometriosis-more-easily/" class="article" style="display: flex; justify-content: space-between; align-items: baseline; gap: 19px; padding: 12px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--body); text-decoration: none">
 <span style="line-height: 1.45">Guidelines to let GPs diagnose endometriosis more easily</span>
 <span style="font-size: 14px; color: var(--subtle); white-space: nowrap; flex-shrink: 0" data-iso="2026-08-18">Aug 18</span>
-</a>
-<a href="https://www.1news.co.nz/2026/08/17/auckland-harbour-crossing-decision-deferred-to-at-least-2027/" class="article" style="display: flex; justify-content: space-between; align-items: baseline; gap: 19px; padding: 12px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--body); text-decoration: none">
-<span style="line-height: 1.45">Auckland harbour crossing decision deferred to at least 2027</span>
-<span style="font-size: 14px; color: var(--subtle); white-space: nowrap; flex-shrink: 0" data-iso="2026-08-17">Aug 17</span>
 </a>
 </div>
 </div>
@@ -209,6 +214,8 @@ a { transition: color 0.15s; }
 <a href="https://justinhu-nz.github.io/GTFS-frequencyMapper/" rel="nofollow" style="color: var(--subtle); text-decoration: none; white-space: nowrap">GTFS Transit Frequency Mapper</a>
 </div>
 </div>
+
+<p id="np" data-nosnippet title="Click to change" style="font-size: 14px; color: var(--label); letter-spacing: 0.04em; text-transform: uppercase; margin: 58px 0 0; display: none; cursor: pointer; user-select: none">Now playing: <span id="np-track" style="text-transform: none; letter-spacing: 0; color: var(--subtle)"></span></p>
 </div>
 
 <script>
@@ -218,5 +225,41 @@ for (const s of document.querySelectorAll('[data-iso]')) {
   const rel = days <= 0 ? 'today' : days === 1 ? 'yesterday' : days + ' days ago';
   s.innerHTML = '<span class="date-abs">' + s.textContent + '</span><span class="date-rel">' + rel + '</span>';
 }
+</script>
+
+<script>
+/* "On the desk today" — cycles a favourite from songs.txt, but holds the same
+   pick if you've visited within the last 4 minutes (localStorage remembers). */
+fetch('songs.txt').then(r => r.text()).then(text => {
+  const favs = text.split('\n').map(l => l.trim()).filter(l => l && !l.startsWith('#'));
+  if (!favs.length) return;
+
+  const FOUR_MIN = 4 * 60 * 1000;
+  const now = Date.now();
+  let saved;
+  try { saved = JSON.parse(localStorage.getItem('np') || 'null'); } catch {}
+
+  let track;
+  if (saved && now - saved.t < FOUR_MIN && favs.includes(saved.track)) {
+    track = saved.track;                                   // still fresh — keep it
+  } else {
+    track = favs[Math.floor(Math.random() * favs.length)]; // new visit — repick
+    try { localStorage.setItem('np', JSON.stringify({ track, t: now })); } catch {}
+  }
+
+  const el = document.getElementById('np'), out = document.getElementById('np-track');
+  const show = t => {
+    track = t; out.textContent = t;
+    try { localStorage.setItem('np', JSON.stringify({ track, t: Date.now() })); } catch {}
+  };
+  out.textContent = track;
+  el.style.display = '';                                    // reveal only once we have a track
+
+  el.addEventListener('click', () => {                      // click to change song
+    if (favs.length < 2) return;                            // nothing else to pick
+    let next; do { next = favs[Math.floor(Math.random() * favs.length)]; } while (next === track);
+    show(next);
+  });
+}).catch(() => {});
 </script>
 </body></html>

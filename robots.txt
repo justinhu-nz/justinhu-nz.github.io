@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /songs.txt
 
 Sitemap: https://justinhu-nz.github.io/sitemap.xml
