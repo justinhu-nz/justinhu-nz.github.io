@@ -110,6 +110,9 @@ body[data-email-cursor="original"] .email { cursor: var(--email-cursor-original)
 
 .comic-toggle { display: none; }
 @media (min-width: 768px) and (hover: hover) and (pointer: fine) {
+  body.comic-mode > div > div { max-width: 650px !important; }
+  body.comic-mode > div > div > p:first-of-type { max-width: 650px !important; }
+
   .comic-toggle {
     position: fixed; right: 16px; bottom: 14px; z-index: 3;
     display: inline-flex; align-items: center; gap: 5px;
