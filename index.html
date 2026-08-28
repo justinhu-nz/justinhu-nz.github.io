@@ -34,6 +34,7 @@
   --label: #aaa;
   --rule: rgba(0,0,0,.06);
   --link-deco: rgba(0,0,0,.15);
+  --email-cursor-original: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='46'%20height='30'%3E%3Crect%20x='1'%20y='1'%20width='40'%20height='20'%20rx='6'%20fill='%23333'%20stroke='%23fff'%20stroke-width='1.5'/%3E%3Cpath%20d='M9%2020%20L9%2028%20L18%2020%20Z'%20fill='%23333'/%3E%3Ctext%20x='21'%20y='15.5'%20font-family='sans-serif'%20font-size='11'%20font-weight='600'%20fill='%23fff'%20text-anchor='middle'%3Etip%3F%3C/text%3E%3C/svg%3E");
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -69,14 +70,66 @@ a { transition: color 0.15s; }
 @keyframes sq-flow { to { -webkit-mask-position: 12px center; mask-position: 12px center; } }
 @media (prefers-reduced-motion: reduce) { .squiggle:hover::after { animation: none; } }
 
-/* Feature 3 — cursor becomes a small "tip?" bubble over the email link. */
-.email { cursor: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='46'%20height='30'%3E%3Crect%20x='1'%20y='1'%20width='40'%20height='20'%20rx='6'%20fill='%23333'%20stroke='%23fff'%20stroke-width='1.5'/%3E%3Cpath%20d='M9%2020%20L9%2028%20L18%2020%20Z'%20fill='%23333'/%3E%3Ctext%20x='21'%20y='15.5'%20font-family='sans-serif'%20font-size='11'%20font-weight='600'%20fill='%23fff'%20text-anchor='middle'%3Etip%3F%3C/text%3E%3C/svg%3E") 8 4, pointer; }
+/* The email stays selectable. Change data-email-cursor on <body> to "original"
+   to restore the previous dark speech-bubble cursor. */
+.email { cursor: text; }
+body[data-email-cursor="original"] .email { cursor: var(--email-cursor-original) 8 4, pointer; }
+
+.contact-row { width: fit-content; max-width: 100%; }
+.contact-halo {
+  position: fixed; left: 0; top: 0; z-index: 2;
+  color: var(--subtle); font-size: 11px; font-weight: 600; line-height: 1;
+  white-space: nowrap; pointer-events: none; opacity: 0;
+  text-shadow: 0 0 2px var(--bg), 0 0 5px var(--bg), 0 3px 10px rgba(0,0,0,.2);
+  transform: translateY(-2px); transition: opacity .12s ease, transform .12s ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  body[data-email-cursor="plain"] .contact-row.is-halo-visible .contact-halo {
+    opacity: .85; transform: translateY(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) { .contact-halo { transition: none; } }
+
+.copy-email {
+  display: inline-flex; align-items: center; gap: 0; padding: 4px;
+  border: 0; border-radius: 5px; background: transparent;
+  color: var(--subtle); font: inherit; font-size: 13px; line-height: 1;
+  cursor: pointer; transition: color 0.15s, background 0.15s;
+}
+.copy-email:hover { color: var(--ink); }
+.copy-email:focus-visible { outline: none; color: var(--ink); background: var(--rule); }
+.copy-email svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 1.6; }
+.copy-email span {
+  max-width: 0; overflow: hidden; opacity: 0; white-space: nowrap;
+  transition: max-width 0.2s ease, opacity 0.2s ease, margin-left 0.2s ease;
+}
+.copy-email:hover span, .copy-email:focus-visible span {
+  max-width: 110px; margin-left: 5px; opacity: 1;
+}
 
 /* Feature 1 — story dates: actual date by default, "N days ago" on hover.
    Both variants are pre-rendered; hover swaps them with no per-hover JS. */
 .date-rel { display: none; }
 .article:hover .date-abs { display: none; }
 .article:hover .date-rel { display: inline; }
+.article {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 19px;
+}
+.article > span:first-child { line-height: 1.45; }
+.article > span[data-iso] { flex-shrink: 0; }
+
+/* A mouse can reveal the wider relative date on hover, so keep desktop rows
+   stable by letting long headlines fade beneath it. Touch layouts retain the
+   original wrapping behaviour because they have no hover-induced reflow. */
+@media (hover: hover) and (pointer: fine) {
+  .article { position: relative; display: block; }
+  .article > span:first-child { display: block; overflow: hidden; white-space: nowrap; }
+  .article > span[data-iso] {
+    position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+    padding-left: 27px;
+    background: linear-gradient(to right, transparent, var(--bg) 22px, var(--bg));
+  }
+}
 
 /* Short-laptop fit — tightens vertical rhythm ONLY on small, short screens
    (e.g. 1366x768). Both conditions must hold: the max-width:1600px guard means
@@ -161,7 +214,7 @@ a { transition: color 0.15s; }
 }
 </style>
 </head>
-<body>
+<body data-email-cursor="plain">
 <span id="latest-stories-tight" class="layout-trial-target" aria-hidden="true"></span>
 <span id="latest-stories-balanced" class="layout-trial-target" aria-hidden="true"></span>
 <span id="latest-stories-airy" class="layout-trial-target" aria-hidden="true"></span>
@@ -170,7 +223,14 @@ a { transition: color 0.15s; }
 <p style="font-size: 20px; line-height: 1.75; color: var(--ink); margin: 0 0 7px; font-weight: 400; max-width: 550px">Justin Hu is a digital politics reporter at TVNZ, covering public policy, local government and transport, based in Auckland.</p>
 
 <p style="font-size: 14px; color: var(--label); letter-spacing: 0.04em; text-transform: uppercase; margin: 24px 0 7px">Want to yarn? Got a tip?</p>
-<p style="font-size: 17px; line-height: 1.7; color: var(--muted); margin: 0"><a href="mailto:justin.hu@tvnz.co.nz" class="email squiggle" style="color: var(--muted); text-decoration: none">justin.hu@tvnz.co.nz</a></p>
+<p class="contact-row" style="display: flex; align-items: center; flex-wrap: wrap; gap: 9px; font-size: 17px; line-height: 1.7; color: var(--muted); margin: 0">
+<a href="mailto:justin.hu@tvnz.co.nz" class="email squiggle" style="color: var(--muted); text-decoration: none">justin.hu@tvnz.co.nz</a>
+<button type="button" id="copy-email" class="copy-email" aria-label="Copy email address">
+<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="5" y="5" width="8" height="8" rx="1.5"></rect><path d="M3 10.5H2.5A1.5 1.5 0 0 1 1 9V2.5A1.5 1.5 0 0 1 2.5 1H9a1.5 1.5 0 0 1 1.5 1.5V3"></path></svg>
+<span aria-live="polite">Copy email address</span>
+</button>
+<span id="contact-halo" class="contact-halo" aria-hidden="true">tip?</span>
+</p>
 
 <div style="display: flex; gap: 19px; margin: 29px 0 0; font-size: 16px">
 <a href="https://www.1news.co.nz/reporter/justin-hu/" class="social squiggle" style="color: var(--subtle); text-decoration: none">1news</a>
@@ -182,19 +242,19 @@ a { transition: color 0.15s; }
 <p style="font-size: 14px; color: var(--label); letter-spacing: 0.04em; text-transform: uppercase; margin: 0 0 19px">Latest stories</p>
 
 <div style="display: flex; flex-direction: column; font-size: 17px">
-<a href="https://www.1news.co.nz/2026/08/26/success-until-cancellations-councillors-warn-of-crl-opening-risks/" class="article" style="display: flex; justify-content: space-between; align-items: baseline; gap: 19px; padding: 12px 0; border-top: 1px solid var(--rule); color: var(--body); text-decoration: none">
+<a href="https://www.1news.co.nz/2026/08/26/success-until-cancellations-councillors-warn-of-crl-opening-risks/" class="article" style="padding: 12px 0; border-top: 1px solid var(--rule); color: var(--body); text-decoration: none">
 <span style="line-height: 1.45">&#x27;Success until cancellations&#x27;: Councillors warn of CRL opening risks</span>
 <span style="font-size: 14px; color: var(--subtle); white-space: nowrap; flex-shrink: 0" data-iso="2026-08-25">Aug 25</span>
 </a>
-<a href="https://www.1news.co.nz/2026/08/25/govt-says-no-time-for-social-media-bill-after-labour-backs-it/" class="article" style="display: flex; justify-content: space-between; align-items: baseline; gap: 19px; padding: 12px 0; border-top: 1px solid var(--rule); color: var(--body); text-decoration: none">
+<a href="https://www.1news.co.nz/2026/08/25/govt-says-no-time-for-social-media-bill-after-labour-backs-it/" class="article" style="padding: 12px 0; border-top: 1px solid var(--rule); color: var(--body); text-decoration: none">
 <span style="line-height: 1.45">Govt says no time for social media bill after Labour backs it</span>
 <span style="font-size: 14px; color: var(--subtle); white-space: nowrap; flex-shrink: 0" data-iso="2026-08-25">Aug 25</span>
 </a>
-<a href="https://www.1news.co.nz/2026/08/24/seymour-and-peters-hit-back-as-luxon-moves-on-under-16s-social-media-ban/" class="article" style="display: flex; justify-content: space-between; align-items: baseline; gap: 19px; padding: 12px 0; border-top: 1px solid var(--rule); color: var(--body); text-decoration: none">
+<a href="https://www.1news.co.nz/2026/08/24/seymour-and-peters-hit-back-as-luxon-moves-on-under-16s-social-media-ban/" class="article" style="padding: 12px 0; border-top: 1px solid var(--rule); color: var(--body); text-decoration: none">
 <span style="line-height: 1.45">Seymour and Peters hit back as Luxon moves on under-16s social media ban</span>
 <span style="font-size: 14px; color: var(--subtle); white-space: nowrap; flex-shrink: 0" data-iso="2026-08-24">Aug 24</span>
 </a>
-<a href="https://www.1news.co.nz/2026/08/23/act-releases-election-treaty-policy-whats-in-it-and-whats-gone/" class="article" style="display: flex; justify-content: space-between; align-items: baseline; gap: 19px; padding: 12px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--body); text-decoration: none">
+<a href="https://www.1news.co.nz/2026/08/23/act-releases-election-treaty-policy-whats-in-it-and-whats-gone/" class="article" style="padding: 12px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--body); text-decoration: none">
 <span style="line-height: 1.45">ACT releases election Treaty policy - what&#x27;s in it and what&#x27;s gone</span>
 <span style="font-size: 14px; color: var(--subtle); white-space: nowrap; flex-shrink: 0" data-iso="2026-08-23">Aug 23</span>
 </a>
@@ -217,6 +277,73 @@ a { transition: color 0.15s; }
 
 <p id="np" data-nosnippet style="font-size: 14px; color: var(--label); letter-spacing: 0.04em; text-transform: uppercase; margin: 58px 0 0; display: none">Now playing: <span id="np-track" style="text-transform: none; letter-spacing: 0; color: var(--subtle)"></span></p>
 </div>
+
+<script>
+/* One hover boundary for the whole contact row keeps the playful note stable. */
+const contactRow = document.querySelector('.contact-row');
+const contactHalo = document.getElementById('contact-halo');
+const contactEmail = contactRow.querySelector('.email');
+const contactMessages = ['tip?', 'information?', 'feedback?', 'catch-up?', 'coffee?', 'beers?'];
+const canHoverContact = window.matchMedia('(hover: hover) and (pointer: fine)');
+let contactMessageIndex = 0;
+let contactHaloSuppressed = false;
+
+const moveContactHalo = event => {
+  contactHalo.style.left = `${event.clientX + 14}px`;
+  contactHalo.style.top = `${event.clientY + 18}px`;
+};
+
+contactRow.addEventListener('pointerenter', event => {
+  if (!canHoverContact.matches || document.body.dataset.emailCursor !== 'plain') return;
+  if (event.buttons || contactHaloSuppressed) return;
+  contactHaloSuppressed = false;
+  contactHalo.textContent = contactMessages[contactMessageIndex];
+  contactMessageIndex = (contactMessageIndex + 1) % contactMessages.length;
+  moveContactHalo(event);
+  contactRow.classList.add('is-halo-visible');
+});
+contactRow.addEventListener('pointermove', event => {
+  if (!contactHaloSuppressed && canHoverContact.matches) moveContactHalo(event);
+});
+contactRow.addEventListener('pointerleave', () => {
+  contactRow.classList.remove('is-halo-visible');
+});
+contactEmail.addEventListener('pointerdown', () => {
+  contactHaloSuppressed = true;
+  contactRow.classList.remove('is-halo-visible');
+});
+window.addEventListener('pointerup', () => { contactHaloSuppressed = false; }, { passive: true });
+</script>
+
+<script>
+/* Copy the contact address and briefly confirm success in the button. */
+const copyEmail = document.getElementById('copy-email');
+copyEmail.addEventListener('click', async () => {
+  const address = 'justin.hu@tvnz.co.nz';
+  const label = copyEmail.querySelector('span');
+  let field;
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(address);
+    } else {
+      field = document.createElement('textarea');
+      field.value = address;
+      field.style.position = 'fixed';
+      field.style.opacity = '0';
+      document.body.appendChild(field);
+      field.select();
+      if (!document.execCommand('copy')) throw new Error('Copy failed');
+    }
+    label.textContent = 'Copied';
+    window.setTimeout(() => { label.textContent = 'Copy email address'; }, 1800);
+  } catch {
+    label.textContent = 'Copy failed';
+    window.setTimeout(() => { label.textContent = 'Copy email address'; }, 1800);
+  } finally {
+    field?.remove();
+  }
+});
+</script>
 
 <script>
 /* Feature 1 — build "N days ago" alongside each pre-rendered date. */

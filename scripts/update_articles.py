@@ -47,13 +47,11 @@ def parse_articles(xml_bytes: bytes, limit: int) -> list[dict]:
 
 def build_article_html(articles: list[dict]) -> str:
     REGULAR_STYLE = (
-        'display: flex; justify-content: space-between; align-items: baseline; '
-        'gap: 19px; padding: 12px 0; border-top: 1px solid var(--rule); '
+        'padding: 12px 0; border-top: 1px solid var(--rule); '
         'color: var(--body); text-decoration: none'
     )
     LAST_STYLE = (
-        'display: flex; justify-content: space-between; align-items: baseline; '
-        'gap: 19px; padding: 12px 0; border-top: 1px solid var(--rule); '
+        'padding: 12px 0; border-top: 1px solid var(--rule); '
         'border-bottom: 1px solid var(--rule); color: var(--body); text-decoration: none'
     )
 
