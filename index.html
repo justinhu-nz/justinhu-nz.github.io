@@ -49,6 +49,7 @@
   }
 }
 body { margin: 0; background: var(--bg); font-family: 'Source Sans 3', sans-serif; }
+body.comic-mode { font-family: "Comic Sans MS", "Comic Sans", cursive; }
 a { transition: color 0.15s; }
 .email:hover { color: var(--ink); }
 .social:hover { color: var(--ink); }
@@ -105,6 +106,21 @@ body[data-email-cursor="original"] .email { cursor: var(--email-cursor-original)
 }
 .copy-email:hover span, .copy-email:focus-visible span {
   max-width: 110px; margin-left: 5px; opacity: 1;
+}
+
+.comic-toggle { display: none; }
+@media (min-width: 768px) and (hover: hover) and (pointer: fine) {
+  .comic-toggle {
+    position: fixed; right: 16px; bottom: 14px; z-index: 3;
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 6px 8px; border: 1px solid transparent; border-radius: 999px;
+    background: transparent; color: var(--label); font: 11px/1 "Comic Sans MS", "Comic Sans", cursive;
+    cursor: pointer; opacity: .72;
+    transition: color .15s, border-color .15s, opacity .15s, transform .15s;
+  }
+  .comic-toggle:hover { color: var(--ink); border-color: var(--rule); opacity: 1; transform: rotate(-2deg); }
+  .comic-toggle:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+  .comic-toggle[aria-pressed="true"] { color: var(--subtle); opacity: .85; }
 }
 
 /* Feature 1 — story dates: actual date by default, "N days ago" on hover.
@@ -277,6 +293,32 @@ body[data-email-cursor="original"] .email { cursor: var(--email-cursor-original)
 
 <p id="np" data-nosnippet style="font-size: 14px; color: var(--label); letter-spacing: 0.04em; text-transform: uppercase; margin: 58px 0 0; display: none">Now playing: <span id="np-track" style="text-transform: none; letter-spacing: 0; color: var(--subtle)"></span></p>
 </div>
+</div>
+
+<button type="button" id="comic-toggle" class="comic-toggle" aria-pressed="false" aria-label="Turn on Comic Sans mode">
+<span aria-hidden="true">✎</span><span>Comic Sans?</span>
+</button>
+
+<script>
+/* A desktop-only typeface detour, remembered for the next visit. */
+const comicToggle = document.getElementById('comic-toggle');
+let comicMode = false;
+try { comicMode = localStorage.getItem('comic-mode') === 'on'; } catch {}
+
+const setComicMode = enabled => {
+  document.body.classList.toggle('comic-mode', enabled);
+  comicToggle.setAttribute('aria-pressed', String(enabled));
+  comicToggle.setAttribute('aria-label', enabled ? 'Turn off Comic Sans mode' : 'Turn on Comic Sans mode');
+  comicToggle.lastElementChild.textContent = enabled ? 'Sans the Comic' : 'Comic Sans?';
+};
+
+setComicMode(comicMode);
+comicToggle.addEventListener('click', () => {
+  comicMode = !document.body.classList.contains('comic-mode');
+  setComicMode(comicMode);
+  try { localStorage.setItem('comic-mode', comicMode ? 'on' : 'off'); } catch {}
+});
+</script>
 
 <script>
 /* One hover boundary for the whole contact row keeps the playful note stable. */
