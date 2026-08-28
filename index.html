@@ -215,7 +215,7 @@ a { transition: color 0.15s; }
 </div>
 </div>
 
-<p id="np" data-nosnippet title="Click to change" style="font-size: 14px; color: var(--label); letter-spacing: 0.04em; text-transform: uppercase; margin: 58px 0 0; display: none; cursor: pointer; user-select: none">Now playing: <span id="np-track" style="text-transform: none; letter-spacing: 0; color: var(--subtle)"></span></p>
+<p id="np" data-nosnippet style="font-size: 14px; color: var(--label); letter-spacing: 0.04em; text-transform: uppercase; margin: 58px 0 0; display: none">Now playing: <span id="np-track" style="text-transform: none; letter-spacing: 0; color: var(--subtle)"></span></p>
 </div>
 
 <script>
@@ -248,18 +248,8 @@ fetch('songs.txt').then(r => r.text()).then(text => {
   }
 
   const el = document.getElementById('np'), out = document.getElementById('np-track');
-  const show = t => {
-    track = t; out.textContent = t;
-    try { localStorage.setItem('np', JSON.stringify({ track, t: Date.now() })); } catch {}
-  };
   out.textContent = track;
   el.style.display = '';                                    // reveal only once we have a track
-
-  el.addEventListener('click', () => {                      // click to change song
-    if (favs.length < 2) return;                            // nothing else to pick
-    let next; do { next = favs[Math.floor(Math.random() * favs.length)]; } while (next === track);
-    show(next);
-  });
 }).catch(() => {});
 </script>
 </body></html>
